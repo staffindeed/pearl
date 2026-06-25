@@ -1111,8 +1111,9 @@ func handleGetBlock(s *rpcServer, cmd interface{}, closeChan <-chan struct{}) (i
 		Vsize:         int32(blockchain.GetBlockVsize(blk)),
 		StrippedSize:  int32(blk.MsgBlock().SerializeSizeStripped()),
 		Bits:          strconv.FormatInt(int64(blockHeader.Bits), 16),
-		Difficulty:    getDifficultyRatio(blockHeader.Bits, params),
-		NextHash:      nextHashString,
+		Difficulty:      getDifficultyRatio(blockHeader.Bits, params),
+		NextHash:        nextHashString,
+		ProofCommitment: blockHeader.ProofCommitment.String(),
 	}
 
 	if *c.Verbosity == 1 {
@@ -1362,7 +1363,8 @@ func handleGetBlockHeader(s *rpcServer, cmd interface{}, closeChan <-chan struct
 		PreviousHash:  blockHeader.PrevBlock.String(),
 		Time:          blockHeader.Timestamp.Unix(),
 		Bits:          strconv.FormatInt(int64(blockHeader.Bits), 16),
-		Difficulty:    getDifficultyRatio(blockHeader.Bits, params),
+		Difficulty:      getDifficultyRatio(blockHeader.Bits, params),
+		ProofCommitment: blockHeader.ProofCommitment.String(),
 	}
 	return blockHeaderReply, nil
 }
